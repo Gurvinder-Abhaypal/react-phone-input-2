@@ -287,6 +287,12 @@ class PhoneInput extends React.Component {
       if (mainCode) return mainCode;
     }
 
+    // Strictly honor provided iso2 code if it matches a country with the same dial code
+    if (country) {
+      const iso2Match = onlyCountries.find(o => o.iso2 === country && startsWith(inputNumber, o.dialCode));
+      if (iso2Match) return iso2Match;
+    }
+
     const secondBestGuess = onlyCountries.find(o => o.iso2 == country);
     if (inputNumber.trim() === '') return secondBestGuess;
 
